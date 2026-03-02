@@ -8,7 +8,13 @@ const initDB = require("./initDB");
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-app.use(cors());
+app.use(cors({
+  origin: [
+    "http://localhost:5173",
+    "https://unsafelogin-frontend.onrender.com"
+  ],
+  credentials: true
+}));
 app.use(express.json());
 
 // Crear tablas al iniciar
