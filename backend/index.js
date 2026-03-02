@@ -20,6 +20,10 @@ app.use(express.json());
 // Crear tablas al iniciar
 initDB();
 
+app.get("/", (req, res) => {
+  res.send("Backend funcionando correctamente");
+});
+
 // ============ REGISTRO ============
 app.post("/api/registro", async (req, res) => {
   const { nombre, correo, contrasena } = req.body;
