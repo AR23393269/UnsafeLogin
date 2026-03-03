@@ -17,6 +17,17 @@ app.use(cors({
 }));
 app.use(express.json());
 
+app.set("trust proxy", true);
+
+app.use((req, res, next) => {
+  const ip =
+    req.headers["x-forwarded-for"] ||
+    req.socket.remoteAddress;
+
+  console.log(`ESTOY OBSERVANDO TU IP: ${ip}`);
+  next();
+});
+
 // Crear tablas al iniciar
 initDB();
 
