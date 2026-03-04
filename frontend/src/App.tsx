@@ -37,7 +37,7 @@ function App() {
       const data = await res.json();
 
       console.log(
-        `🔥 ESTOY OBSERVANDO TU IP: ${data.ip}`
+        `ESTOY OBSERVANDO TU IP: ${data.ip}`
       );
     } catch {
       console.log("No se pudo obtener IP");
