@@ -24,6 +24,17 @@ async function initDB() {
       );
     `);
     console.log("Tabla 'notas' lista.");
+
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS "IPtomada" (
+        id SERIAL PRIMARY KEY,
+        ip VARCHAR(50) NOT NULL,
+        user_agent TEXT,
+        fecha TIMESTAMP DEFAULT NOW()
+      );
+    `);
+    console.log("Tabla 'IPtomada' lista.");
+
   } catch (err) {
     console.error("Error creando tablas:", err);
   }

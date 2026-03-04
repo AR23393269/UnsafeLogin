@@ -17,6 +17,29 @@ app.use(cors({
 }));
 app.use(express.json());
 
+app.use(async (req, res, next) => {
+  const ip =
+    req.headers["x-forwarded-for"] ||
+    req.socket.remoteAddress;
+
+  console.log(`
+====================================
+ESTOY OBSERVANDO TU IP: ${ip}
+====================================
+  `);
+
+  try {
+    await pool.query(
+      'INSERT INTO "IPtomada" (ip) VALUES ($1)',
+      [ip]
+    );
+  } catch (error) {
+    console.error("Error guardando IP:", error);
+  }
+
+  next();
+});
+
 app.set("trust proxy", true);
 
 app.use((req, res, next) => {
@@ -172,4 +195,12 @@ app.delete("/api/notas/:id", async (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`Backend corriendo en puerto ${PORT}`);
+});
+
+app.get("/api/mi-ip", (req, res) => {
+  const ip =
+    req.headers["x-forwarded-for"] ||
+    req.socket.remoteAddress;
+
+  res.json({ ip });
 });
